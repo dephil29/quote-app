@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quote App</title>
+    <style>
+        body {
+            background-color: red;
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            margin: 0;
+            transition: background-color 1s;
+        }
+
+        .quote-box {
+            background-color: #fff;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+            padding: 30px;
+            transition: color 1s;
+        }
+
+        .quotation-mark {
+            font-size: 8rem;
+            position: absolute;
+            transform: translateY(-20px);
+            color: red;
+            transition: color 1s;
+        }
+
+        .quote-text {
+            margin: 100px;
+            text-align: center;
+            font-size: 2rem;
+            color: red;
+            transition: color 1s;
+        }
+
+        .author {
+            text-align: right;
+            width: 100%;
+            display: block;
+            color: red;
+            font-size: 1.2rem;
+            transition: color 1s;
+        }
+
+        button {
+            background-color: red;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: background-color 1s;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quote-box">
+        <span class="quotation-mark">"</span>
+        <blockquote>
+            <p class="quote-text">"I didn't do it!"</p>
+            <cite class="author">-Me</cite>
+        </blockquote>
+        <button>Get New Quote</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+
+    <script>
+        function getQuote() {
+            $.ajax({
+                headers: {
+                    "X-Mashape-Key": "OivH71yd3tmshl9YKzFH7BTzBVRQp1RaKLajsnafgL2aPsfP9V",
+                    Accept: "application/json",
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                url: 'https://andruxnet-random-famous-quotes.p.mashape.com/cat=',
+                success: function(data) {
+                    var data = JSON.parse(data);
+                    console.log(data.quote);
+                    document.querySelector(".quote-text").innerHTML = data.quote;
+                    document.querySelector(".author").innerHTML = data.author;
+                }
+            });
+        }
+
+
+        document.querySelector("button").addEventListener("click", function() {
+            getQuote();
+
+            var randomColor = "#" + Math.floor(Math.random() * 10) + Math.floor(Math.random() * 10) + Math.floor(Math.random() * 10);
+
+            document.querySelector("body").style.backgroundColor = randomColor;
+            document.querySelector(".quotation-mark").style.color = randomColor;
+            document.querySelector(".quote-text").style.color = randomColor;
+            document.querySelector(".author").style.color = randomColor;
+            document.querySelector("button").style.backgroundColor = randomColor;
+        });
+    </script>
+</body>
+
+</html>
